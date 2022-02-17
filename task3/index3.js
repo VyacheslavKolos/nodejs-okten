@@ -24,8 +24,7 @@ const readDir = () => {
                                         throw err2;
                                     }
                                 })
-                        }
-                        else if (stat.isDirectory() === true) {
+                        } else if (stat.isDirectory() === true) {
                             fs.rename(path.join(__dirname, 'T3Files', `${dir}`),
                                 path.join(__dirname, 'T3Files', `_new${dir}`),
                                 (err3) => {
@@ -57,26 +56,7 @@ fs.mkdir(path.join(__dirname, 'T3Files', 'files'),
                 console.log(err);
                 throw err;
             }
-
-            fs.mkdir(path.join(__dirname, 'T3Files', 'files', 'files_files'),
-                {recursive: true},
-                (err) => {
-                    if (err) {
-                        console.log(err);
-                        throw err;
-                    }
-
-                    fs.writeFile(path.join(__dirname, 'T3Files', 'files', 'files_files.txt'), 'Hello task 3', (err) => {
-                        if (err) {
-                            console.log(err);
-                            throw err;
-                        }
-                        readDir();
-
-                    })
-                })
-
-
+            readDir();
         })
-
     })
+
