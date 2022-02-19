@@ -1,12 +1,24 @@
 {
   "name": "nodejs-okten",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VyacheslavKolos/nodejs-okten.git"
+  },
+  "bugs": {
+    "url": "https://github.com/VyacheslavKolos/nodejs-okten/issues"
+  },
+  "homepage": "https://github.com/VyacheslavKolos/nodejs-okten#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.17.3",
+    "express-handlebars": "^6.0.2"
+  }
 }
