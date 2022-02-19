@@ -53,7 +53,7 @@ app.get('/errorPage', (req, res) => {
 
 app.get('/users/:userId', (req, res) => {
     const {userId} = req.params;
-    const user = users[userId];
+    const user = users[userId-1];
     res.json(user);
 });
 
