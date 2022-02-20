@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require("path");
-const {engine} = require("express-handlebars")
-const e = require("express");
+const {engine} = require("express-handlebars");
+const apiRoutes=require("./routes/apiRoutes")
 
 const users = [
     {
@@ -26,27 +26,30 @@ const userBySignIn = [];
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'files', 'static')));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}))
+
 app.set('view engine', '.hbs');
 app.engine('.hbs', engine({defaultLayout: false}));
 app.set('views', path.join(__dirname, 'files', 'static'));
 
-app.use(express.json());
-app.use(express.urlencoded({extended: true}))
+app.use(apiRoutes);
+
 
 app.get('/login', (req, res) => {
     res.render('login');
 });
 
 
-app.get('/users', (req, res) => {
-    const {age, city} = req.query;
-    if (age && city) {
-        const filredUsers = users.filter(user => user.age === Number(age) && user.city === city)
-        res.render('user', {filtredUsers});
-    } else {
-        res.render('users', {users});
-    }
-});
+// app.get('/users', (req, res) => {
+//     const {age, city} = req.query;
+//     if (age && city) {
+//         const filredUsers = users.filter(user => user.age === Number(age) && user.city === city)
+//         res.render('user', {filtredUsers});
+//     } else {
+//         res.render('users', {users});
+//     }
+// });
 
 
 app.get('/errorPage', (req, res) => {
@@ -97,6 +100,6 @@ app.use((req, res) => {
     res.render('notFound');
 });
 
-app.listen(4700, () => {
-    console.log("Server has started on PORT 4700")
+app.listen(4800, () => {
+    console.log("Server has started on PORT 4800")
 });
