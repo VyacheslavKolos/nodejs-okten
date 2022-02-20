@@ -1,16 +1,11 @@
 const {Router} = require('express');
-const users=require('../db/users')
+const users = require('../db/users')
+const UserController = require('../controllers/userController')
 
 const userRouter = Router();
 
-userRouter.get('/', (req, res) => {
-    const {age, city} = req.query;
-    if (age && city) {
-        const filteredUsers = users.filter(user => user.age === Number(age) && user.city === city)
-        res.render('user', {filteredUsers});
-    } else {
-        res.render('users', {users});
-    }
-})
+userRouter.get('/', UserController.renderUsers);
 
-module.exports=userRouter;
+userRouter.get('/:userId', UserController.getUserById);
+
+module.exports = userRouter;
