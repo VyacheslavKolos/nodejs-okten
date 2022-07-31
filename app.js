@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const {engine} = require('express-handlebars');
+const e = require('express');
 
 const users = [
     {
@@ -21,6 +22,8 @@ const users = [
     }
 ];
 
+const userBySignIn = [];
+
 const app = express();
 
 app.use(express.json());
@@ -38,7 +41,7 @@ app.get('/login', (req, res) => {
 app.get('/users', (req, res) => {
     const {age, city} = req.query;
     if (age && city) {
-        const filteredUsers = users.filter(user => user.age === Number(age) && user.city === city)
+        const filteredUsers = users.filter(user => user.age === Number(age) && user.city === city);
         res.render('user', {filteredUsers});
     } else {
         res.render('users', {users});
@@ -47,25 +50,45 @@ app.get('/users', (req, res) => {
 
 app.get('/users/:userId', (req, res) => {
     const {userId} = req.params;
-    res.json(users[userId-1]);
+    res.json(users[userId - 1]);
 });
 
 app.get('/errorPage', (req, res) => {
     res.render('errorPage', {users});
 });
 
+app.get('/userBySignIn', (req, res) => {
+    res.render('userBySignIn', {userBySignIn})
+})
+
+app.get('/signIn', (req, res) => {
+    res.render('signIn');
+});
+
+
 app.post('/login', (req, res) => {
-    users.map(user=>{
-        if (user.email!==req.body.email){
+    users.map(user => {
+        if (user.email !== req.body.email) {
             users.push(req.body);
             res.redirect('/users');
-        }else {
-            res.redirect('/errorPage')
+        } else {
+            res.redirect('/errorPage');
+        }
+    });
+});
+
+app.post('/signIn', (req, res) => {
+    const {email, password} = req.body
+    users.map(user => {
+        if (user.email === email && user.password === password) {
+            userBySignIn.push(user);
+            res.redirect('/userBySignIn')
+        } else {
+            res.redirect('/errorPage');
         }
     })
-
-
 });
+
 
 app.use((req, res) => {
     res.render('notFound');
