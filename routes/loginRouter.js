@@ -1,19 +1,13 @@
-const {Router}=require('express');
+const {Router} = require('express');
 
-const users=require('../db/users');
+const loginController = require('../controllers/loginController');
 
-const loginRouter=Router();
+const loginMiddleware = require('../middleware/isUserValid');
 
-loginRouter.post('/',(req, res) => {
-    users.map(user => {
-        if (user.email !== req.body.email) {
-            users.push(req.body);
-            res.redirect('/users');
-        } else {
-            res.redirect('/errorPage');
-        }
-    });
-});
+const loginRouter = Router();
+
+loginRouter.get('/', loginController.renderLogin);
+loginRouter.post('/', loginMiddleware, loginController.loginUser);
 
 
-module.exports=loginRouter;
+module.exports = loginRouter;
