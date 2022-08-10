@@ -9,7 +9,6 @@ class SignInController {
 
     signIn(req,res){
         const {email, password} = req.body;
-        console.log(req.body);
         users.map(user => {
             if (user.email === email && user.password === password) {
                 usersBySignIn.push(user);
